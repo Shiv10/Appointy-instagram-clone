@@ -18,15 +18,18 @@ func main(){
 		log.Fatal(err)
 		os.Exit(1)
 	}
-
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	err = client.Connect(ctx)
-
 	if err!= nil {
 		log.Fatal(err)
 		os.Exit(1)
 	}
 	defer cancel()
 	defer client.Disconnect(ctx)
+
+	appointyDB := client.Database("AppointyDB")
+	usersCollection := appointyDB.Collection("Users")
+	postsCollection := appointyDB.Collection("Posts")
+
 
 }
