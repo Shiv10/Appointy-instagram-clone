@@ -58,7 +58,7 @@ func main(){
 
 	flag.Parse()
 	addr := net.JoinHostPort(*host, *port)
-	if err := routers.RunHttp(addr, &ctx, &client); err != nil {
+	if err := routers.RunHttp(addr, ctx, client); err != nil {
 		log.Fatal(err)
 	}
 }
