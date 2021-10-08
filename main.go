@@ -53,7 +53,7 @@ func main(){
 
 	var (
 		host = flag.String("host", "", "host http address to listen on")
-		port = flag.String("port", "8000", "port number for http listener")
+		port = flag.String("port", "3000", "port number for http listener")
 	)
 
 	flag.Parse()
