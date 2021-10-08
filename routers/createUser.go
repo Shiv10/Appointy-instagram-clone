@@ -1,7 +1,7 @@
 package routers
 
 import (
-	// "fmt"
+	"fmt"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/bson"
@@ -49,7 +49,7 @@ func CreateUsers(client *mongo.Client, ctx context.Context, w http.ResponseWrite
 	}
 
 	if err!=nil && err!= mongo.ErrNoDocuments {
-		http.Error(w, "Internal Error", http.StatusBadRequest)
+		http.Error(w, "Internal Error", http.StatusInternalServerError)
         return "Error"
 	}
 
@@ -63,16 +63,23 @@ func CreateUsers(client *mongo.Client, ctx context.Context, w http.ResponseWrite
 		{Key: "Name", Value: u.Username},
 		{Key: "Password", Value: bs},
 		{Key: "Email", Value: u.Email},
+		{Key: "ID", Value: "null"},
 	})
 
+	
+
 	if err!=nil {
-		http.Error(w, "Internal Error", http.StatusBadRequest)
+		http.Error(w, "Internal Error", http.StatusInternalServerError)
         return "Error"
 	}
 
 	stringID := newUser.InsertedID.(primitive.ObjectID).Hex()
 
+	updatedUser, err := usersCollection.UpdateOne(ctx, bson.M{"Email": u.Email}, bson.D{
+		{Key: "$set", Value: bson.D{{Key: "ID", Value: stringID}}},
+	})
 
+	fmt.Println(updatedUser)
     w.Header().Set("Content-Type","application/json")
 	w.WriteHeader(http.StatusOK) 
 	w.Write([]byte(stringID))
