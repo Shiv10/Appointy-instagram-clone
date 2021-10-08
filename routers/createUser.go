@@ -1,14 +1,15 @@
 package routers
 
 import (
-	"fmt"
+	// "fmt"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/bson"
 	"context"
 	"net/http"
 	"encoding/json"
-	"reflect"
+	// "reflect"
+	"crypto/sha1"
 	// "time"
 )
 
@@ -22,7 +23,7 @@ type UsersFromDB struct {
 	ID primitive.ObjectID
 	Name string
 	Email string
-	password string
+	password []uint8
 }
 
 func CreateUsers(client *mongo.Client, ctx context.Context, w http.ResponseWriter, r *http.Request) string{
@@ -47,15 +48,20 @@ func CreateUsers(client *mongo.Client, ctx context.Context, w http.ResponseWrite
         return "Error"
 	}
 
-	if err!=nil {
+	if err!=nil && err!= mongo.ErrNoDocuments {
 		http.Error(w, "Internal Error", http.StatusBadRequest)
         return "Error"
 	}
 
+	//hash the password
+	h := sha1.New()
+	h.Write([]byte(u.Password))
+	bs := h.Sum(nil)
+
 	//insert user in DB
 	newUser, err := usersCollection.InsertOne(ctx, bson.D{
 		{Key: "Name", Value: u.Username},
-		{Key: "Password", Value: u.Password},
+		{Key: "Password", Value: bs},
 		{Key: "Email", Value: u.Email},
 	})
 
@@ -70,7 +76,7 @@ func CreateUsers(client *mongo.Client, ctx context.Context, w http.ResponseWrite
     w.Header().Set("Content-Type","application/json")
 	w.WriteHeader(http.StatusOK) 
 	w.Write([]byte(stringID))
-	fmt.Println(reflect.TypeOf(newUser.InsertedID))
+
 	
 	return "User created."
 }
