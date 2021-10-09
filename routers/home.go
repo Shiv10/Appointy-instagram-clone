@@ -23,7 +23,7 @@ func NewRouter(client *mongo.Client, ctx context.Context) http.Handler {
 			id := id_arr[len(id_arr)-1]
 			
 			if id=="users" {
-				http.Error(w, "Please Enter ID", http.StatusBadRequest)
+				http.Error(w, "Please Enter user ID", http.StatusBadRequest)
 				fmt.Println("No ID")
 				return
 			}
@@ -38,10 +38,17 @@ func NewRouter(client *mongo.Client, ctx context.Context) http.Handler {
 			return
 		}
 
-		if r.URL.Path == "/getPost" {
-			res := GetPost()
-			w.WriteHeader(http.StatusOK)
-			w.Write([]byte(res))
+		if strings.Contains(r.URL.Path,"/posts") && !strings.Contains(r.URL.Path,"/users") && r.Method == http.MethodGet {
+			postID_arr := strings.Split(r.URL.Path, "/")
+			postID := postID_arr[len(postID_arr)-1]
+			
+			if postID=="posts" {
+				http.Error(w, "Please Enter post ID", http.StatusBadRequest)
+				fmt.Println("No ID")
+				return
+			}
+			res := GetPost(client, ctx, w, r, postID)
+			fmt.Println(res)
 			return
 		}
 
