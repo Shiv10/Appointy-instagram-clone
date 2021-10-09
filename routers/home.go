@@ -29,7 +29,7 @@ func HandleRequest(w http.ResponseWriter, r *http.Request) {
 	ctx := ctxx
 	client := cli
 
-	if r.URL.Path == "/user" && r.Method == http.MethodPost {
+	if r.URL.Path == "/users" && r.Method == http.MethodPost {
 		res := CreateUsers(client, ctx, w, r)
 		fmt.Println(res)
 		return
