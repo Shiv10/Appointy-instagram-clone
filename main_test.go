@@ -10,7 +10,7 @@ import (
 )
 
 func TestGetUserById(t *testing.T) {
-	resp, err := http.Get("http://localhost:3000/users/61615b5ea1bc982a4eae9545")
+	resp, err := http.Get("http://localhost:3000/users/6161b8eea54474fe02d9f96c")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -22,7 +22,7 @@ func TestGetUserById(t *testing.T) {
 
 	
 	sb := string(body)
-	expected := `{"Email":"shivanshsharma2012@gmail.com","Name":"Shivansh","ID":"61615b5ea1bc982a4eae9545"}`
+	expected := `{"Email":"shivanshsharma2012@gmail.com","Name":"Shivansh","ID":"6161b8eea54474fe02d9f96c"}`
 	if sb != expected {
 		t.Errorf("handler returned unexpected body: got %v want %v",sb, expected)
 	}
@@ -56,7 +56,7 @@ func TestCreatePostRoute(t *testing.T){
 	postBody , _ := json.Marshal(map[string]string{
 		"Caption":"This is a test caption",
     	"ImageURL":"http://www.testimagehere.jpg",
-    	"UserID":"61615b5ea1bc982a4eae9545",
+    	"UserID":"6161b8eea54474fe02d9f96c",
 	})
 	reqBody := bytes.NewBuffer(postBody)
 	resp, err := http.Post("http://localhost:3000/posts", "application/json", reqBody)
@@ -77,7 +77,7 @@ func TestCreatePostRoute(t *testing.T){
 }
 
 func TestGetPostById(t *testing.T) {
-	resp, err := http.Get("http://localhost:3000/posts/61615d2052bde7ba3bb647a2")
+	resp, err := http.Get("http://localhost:3000/posts/6161d48bee1f6959e748faeb")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -96,7 +96,7 @@ func TestGetPostById(t *testing.T) {
 }
 
 func TestGetPostByUserId(t *testing.T) {
-	resp, err := http.Get("http://localhost:3000/posts/users/61615b5ea1bc982a4eae9545")
+	resp, err := http.Get("http://localhost:3000/posts/users/6161b8eea54474fe02d9f96c")
 	if err != nil {
 		t.Fatal(err)
 	}

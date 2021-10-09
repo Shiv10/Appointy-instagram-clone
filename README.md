@@ -1,8 +1,3 @@
-
-[![Issues][issues-shield]](https://github.com/Shiv10/Appointy-instagram-clone/issues)
-
-<!-- PROJECT LOGO -->
-<br />
 <p align="center">
   <a>
     <img src="https://user-images.githubusercontent.com/17690376/136663828-9a59dcdb-003b-4a36-85df-67c8e2d4c258.png" alt="Logo" width="200">
@@ -15,8 +10,8 @@
     <br />
     <a href="https://github.com/Shiv10/Appointy-instagram-clone"><strong>Explore the docs »</strong></a>
     <br />
-    <!-- <a href="https://www.youtube.com/watch?v=ifayZiXxAWo">View Demo</a>
-    · -->
+    <a href="https://drive.google.com/file/d/1BsLvLt8L40TSJO1KA6jRUwP7LHJyzBoQ/view?usp=sharing">View Demo</a>
+    ·
     <a href="https://github.com/Shiv10/Appointy-instagram-clone/issues">Report Bug</a>
     ·
     <a href="https://github.com/Shiv10/Appointy-instagram-clone/issues">Request Feature</a>
@@ -25,7 +20,7 @@
 
 
 
-<!-- TABLE OF CONTENTS -->
+
 ## Table of Contents
 
 * [About the Project](#about-the-project)
@@ -100,7 +95,7 @@ Examples of routes using [Postman](https://www.postman.com/)
 ![s1](https://user-images.githubusercontent.com/17690376/136665288-0971b932-f3bb-49a2-ba26-eb44e2d7adc9.png)
 <br/>
 
-2. Sending request again with the same email. Server responds with eroor message.
+2. Sending request again with the same email. Server responds with error message.
 ![s2](https://user-images.githubusercontent.com/17690376/136665382-dd6e39d3-adaa-4ecb-a251-0d9869ab445b.png)
 
 <br/>
