@@ -76,3 +76,41 @@ func TestCreatePostRoute(t *testing.T){
 	}
 }
 
+func TestGetPostById(t *testing.T) {
+	resp, err := http.Get("http://localhost:3000/posts/61615d2052bde7ba3bb647a2")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+    body, err := ioutil.ReadAll(resp.Body)
+   	if err != nil {
+    	t.Fatal(err)
+   	}
+
+	
+	sb := string(body)
+	
+	if sb == "Internal error" {
+		t.Error("Server is not reachable")
+	}
+}
+
+func TestGetPostByUserId(t *testing.T) {
+	resp, err := http.Get("http://localhost:3000/posts/users/61615b5ea1bc982a4eae9545")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+    body, err := ioutil.ReadAll(resp.Body)
+   	if err != nil {
+    	t.Fatal(err)
+   	}
+
+	
+	sb := string(body)
+	
+	if sb == "Internal error" {
+		t.Error("Server is not reachable")
+	}
+}
+
