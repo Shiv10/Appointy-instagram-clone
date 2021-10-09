@@ -52,3 +52,27 @@ func TestCreateUserRoute(t *testing.T){
 	}
 }
 
+func TestCreatePostRoute(t *testing.T){
+	postBody , _ := json.Marshal(map[string]string{
+		"Caption":"This is a test caption",
+    	"ImageURL":"http://www.testimagehere.jpg",
+    	"UserID":"61615b5ea1bc982a4eae9545",
+	})
+	reqBody := bytes.NewBuffer(postBody)
+	resp, err := http.Post("http://localhost:3000/posts", "application/json", reqBody)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	defer resp.Body.Close()
+	//Read the response body
+  	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		t.Fatal(err)
+	}
+	sb := string(body)
+	if sb=="Internal error" {
+		t.Error("Server is not reachable")
+	}
+}
+
