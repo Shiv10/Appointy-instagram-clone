@@ -64,6 +64,7 @@ func GetPostByUser(client *mongo.Client, ctx context.Context, w http.ResponseWri
 		resp.ImageURL = elem.ImageURL
 		resp.ID = elem.ID
 		resp.UserID = elem.UserID
+		resp.Timestamp = elem.Timestamp
 		posts = append(posts, resp)
 	}
 	

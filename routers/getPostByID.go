@@ -7,6 +7,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/bson"
+	"time"
 )
 
 type PostsFromDB struct {
@@ -15,6 +16,7 @@ type PostsFromDB struct {
 	ImageURL string
 	UserID string
 	ID string
+	Timestamp time.Time
 }
 
 type PostResponse struct {
@@ -22,6 +24,7 @@ type PostResponse struct {
 	ImageURL string
 	UserID string
 	ID string
+	Timestamp time.Time
 }
 
 func GetPost(client *mongo.Client, ctx context.Context, w http.ResponseWriter, r *http.Request, postID string) string{
@@ -63,6 +66,7 @@ func GetPost(client *mongo.Client, ctx context.Context, w http.ResponseWriter, r
 		resp.Caption = elem.Caption
 		resp.ImageURL = elem.ImageURL
 		resp.ID = elem.ID
+		resp.Timestamp = elem.Timestamp
 		resp.UserID = elem.UserID
 		posts = append(posts, resp)
 	}

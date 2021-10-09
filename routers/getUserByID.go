@@ -54,5 +54,5 @@ func GetUser(client *mongo.Client, ctx context.Context, w http.ResponseWriter, r
 	w.Header().Set("Content-Type","application/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write(responseJson)
-	return "No post found"
+	return "No user found"
 }
