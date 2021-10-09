@@ -99,6 +99,7 @@ Examples of routes using [Postman](https://www.postman.com/)
 1. Create a user by sending POST request. Server responds with userID if created successfuly.
 ![s1](https://user-images.githubusercontent.com/17690376/136665288-0971b932-f3bb-49a2-ba26-eb44e2d7adc9.png)
 <br/>
+
 2. Sending request again with the same email. Server responds with eroor message.
 ![s2](https://user-images.githubusercontent.com/17690376/136665382-dd6e39d3-adaa-4ecb-a251-0d9869ab445b.png)
 
