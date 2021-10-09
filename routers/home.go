@@ -18,7 +18,7 @@ func NewRouter(client *mongo.Client, ctx context.Context) http.Handler {
 			return
 		}
 
-		if strings.Contains(r.URL.Path,"/users") && r.Method == http.MethodGet {
+		if strings.Contains(r.URL.Path,"/users") && !strings.Contains(r.URL.Path,"/posts") && r.Method == http.MethodGet {
 			id_arr := strings.Split(r.URL.Path, "/")
 			id := id_arr[len(id_arr)-1]
 			
