@@ -47,13 +47,13 @@
 This project is the task given for the Appointy interhsip for the year 2021. The project emulates the backend of Instagram in a very basic manner. There are a total of 5 routes which are listed below:
 
 ### Routes
-Sr. No |  Description
--------|-----------------------------------------------------
-1. Create a User      |  POST request on route '/users' to add a user to the Database
-2. Get user by ID      | GET request on route '/users/:id' to retrieve a user from the Db by using ID
-3. Create a Post      |  POST request on route '/posts' to add a post to the Database
-4. Get post by ID      |  GET request on route '/posts/:id' to retrieve a post from the Db by using ID
-5. List all posts of a user      |  GET request on route '/posts/users/:id' to retrive all posts of a user. (Pagination applied to make backend efficient)
+Sr. No                     |  Description
+---------------------------|--------------------------------------------------------------------------------------------------------
+1. Create a User           |  POST request on route '/users' to add a user to the Database
+2. Get user by ID          | GET request on route '/users/:id' to retrieve a user from the Db by using ID
+3. Create a Post           |  POST request on route '/posts' to add a post to the Database
+4. Get post by ID          |  GET request on route '/posts/:id' to retrieve a post from the Db by using ID
+5. List all posts of a user|  GET request on route '/posts/users/:id' to retrive all posts of a user. (Pagination applied to make backend efficient)
 
 
 
