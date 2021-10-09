@@ -24,6 +24,10 @@ type UsersFromDB struct {
 	password []uint8
 }
 
+type UserResponse struct {
+	UserID string
+}
+
 func CreateUsers(client *mongo.Client, ctx context.Context, w http.ResponseWriter, r *http.Request) string{
 	
 	u := User{}
@@ -42,8 +46,17 @@ func CreateUsers(client *mongo.Client, ctx context.Context, w http.ResponseWrite
 	result := UsersFromDB{}
 	err = usersCollection.FindOne(ctx, filter).Decode(&result)
 	if err!=  mongo.ErrNoDocuments {
-		http.Error(w, "User already exists", http.StatusBadRequest)
-        return "Error"
+		var e Error
+		e.Err = "User already exists"
+		responseJson, err := json.Marshal(e)
+		if err != nil{
+			http.Error(w, "Internal Error", http.StatusInternalServerError)
+			return "Error"
+		}
+		w.Header().Set("Content-Type","application/json")
+		w.WriteHeader(http.StatusOK)
+		w.Write(responseJson)
+		return "User exists"
 	}
 
 	if err!=nil && err!= mongo.ErrNoDocuments {
@@ -78,9 +91,16 @@ func CreateUsers(client *mongo.Client, ctx context.Context, w http.ResponseWrite
 	})
 
 	fmt.Println(updatedUser)
+	var userResponse UserResponse
+	userResponse.UserID = stringID
+	userJson, err := json.Marshal(userResponse)
+	if err != nil{
+		http.Error(w, "Internal Error", http.StatusInternalServerError)
+		return "No document found"
+	}
     w.Header().Set("Content-Type","application/json")
 	w.WriteHeader(http.StatusOK) 
-	w.Write([]byte(stringID))
+	w.Write([]byte(userJson))
 
 	
 	return "User created."

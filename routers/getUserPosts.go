@@ -1,7 +1,6 @@
 package routers
 
 import (
-	"fmt"
 	"context"
 	"net/http"
 	"encoding/json"
@@ -18,8 +17,17 @@ func GetPostByUser(client *mongo.Client, ctx context.Context, w http.ResponseWri
 	cur, err := postsCollection.Find(ctx, filter)
 
 	if err==mongo.ErrNoDocuments {
-		http.Error(w, "No post found for user ID", http.StatusOK)
-    	return "Not found"
+		var e Error
+		e.Err = "No post found for user ID"
+		responseJson, err := json.Marshal(e)
+		if err != nil{
+			http.Error(w, "Internal Error", http.StatusInternalServerError)
+			return "Error"
+		}
+		w.Header().Set("Content-Type","application/json")
+		w.WriteHeader(http.StatusOK)
+		w.Write(responseJson)
+		return "No post found"
 	}
 
 	if err!=nil && err!= mongo.ErrNoDocuments {
@@ -43,17 +51,25 @@ func GetPostByUser(client *mongo.Client, ctx context.Context, w http.ResponseWri
 	}
 	
 	if len(posts)==0{
-		http.Error(w, "No posts for given id", http.StatusInternalServerError)
-		return "No posts"
+		var e Error
+		e.Err = "No post found"
+		responseJson, err := json.Marshal(e)
+		if err != nil{
+			http.Error(w, "Internal Error", http.StatusInternalServerError)
+			return "Error"
+		}
+		w.Header().Set("Content-Type","application/json")
+		w.WriteHeader(http.StatusOK)
+		w.Write(responseJson)
+		return "No post found"
 	}
 	postsJson, err := json.Marshal(posts)
 	if err != nil{
 		http.Error(w, "Internal Error", http.StatusInternalServerError)
-		return "error"
+		return "Error"
 	}
 
 	w.WriteHeader(http.StatusOK)
 	w.Write(postsJson)
-	fmt.Println("Get posts of user")
 	return "User posts sent."
 }

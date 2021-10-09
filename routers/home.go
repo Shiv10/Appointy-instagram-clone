@@ -6,7 +6,12 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"context"
 	"strings"
+	"encoding/json"
 )
+
+type Error struct {
+	Err string
+}
 
 func NewRouter(client *mongo.Client, ctx context.Context) http.Handler {
 	main := http.NewServeMux()
@@ -23,8 +28,16 @@ func NewRouter(client *mongo.Client, ctx context.Context) http.Handler {
 			id := id_arr[len(id_arr)-1]
 			
 			if id=="users" {
-				http.Error(w, "Please Enter user ID", http.StatusBadRequest)
-				fmt.Println("No ID")
+				var e Error
+				e.Err = "User ID missing"
+				responseJson, err := json.Marshal(e)
+				if err != nil{
+					http.Error(w, "Internal Error", http.StatusInternalServerError)
+					return
+				}
+				w.Header().Set("Content-Type","application/json")
+				w.WriteHeader(http.StatusBadRequest)
+				w.Write(responseJson)
 				return
 			}
 			res := GetUser(client, ctx, w, r, id)
@@ -43,8 +56,16 @@ func NewRouter(client *mongo.Client, ctx context.Context) http.Handler {
 			postID := postID_arr[len(postID_arr)-1]
 			
 			if postID=="posts" {
-				http.Error(w, "Please Enter post ID", http.StatusBadRequest)
-				fmt.Println("No ID")
+				var e Error
+				e.Err = "Post ID missing"
+				responseJson, err := json.Marshal(e)
+				if err != nil{
+					http.Error(w, "Internal Error", http.StatusInternalServerError)
+					return
+				}
+				w.Header().Set("Content-Type","application/json")
+				w.WriteHeader(http.StatusBadRequest)
+				w.Write(responseJson)
 				return
 			}
 			res := GetPost(client, ctx, w, r, postID)
@@ -57,8 +78,16 @@ func NewRouter(client *mongo.Client, ctx context.Context) http.Handler {
 			id := id_arr[len(id_arr)-1]
 			
 			if id=="users" {
-				http.Error(w, "Please Enter user ID", http.StatusBadRequest)
-				fmt.Println("No ID")
+				var e Error
+				e.Err = "User ID missing"
+				responseJson, err := json.Marshal(e)
+				if err != nil{
+					http.Error(w, "Internal Error", http.StatusInternalServerError)
+					return
+				}
+				w.Header().Set("Content-Type","application/json")
+				w.WriteHeader(http.StatusBadRequest)
+				w.Write(responseJson)
 				return
 			}
 			res := GetPostByUser(client, ctx, w, r, id)

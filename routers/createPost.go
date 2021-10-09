@@ -17,6 +17,10 @@ type Post struct {
 	UserID string
 }
 
+type PostResp struct {
+	PostID string
+}
+
 func CreatePost(client *mongo.Client, ctx context.Context, w http.ResponseWriter, r *http.Request) string{
 	post := Post{}
 	err := json.NewDecoder(r.Body).Decode(&post)
@@ -37,8 +41,17 @@ func CreatePost(client *mongo.Client, ctx context.Context, w http.ResponseWriter
 	err = usersCollection.FindOne(ctx, filter).Decode(&result)
 
 	if err==mongo.ErrNoDocuments {
-		http.Error(w, "No user with given ID exists", http.StatusBadRequest)
-        return "Error"
+		var e Error
+		e.Err = "No user with ID exists"
+		responseJson, err := json.Marshal(e)
+		if err != nil{
+			http.Error(w, "Internal Error", http.StatusInternalServerError)
+			return "Error"
+		}
+		w.Header().Set("Content-Type","application/json")
+		w.WriteHeader(http.StatusOK)
+		w.Write(responseJson)
+		return "User does not exist"
 	}
 	
 	if err!=  mongo.ErrNoDocuments {
@@ -60,10 +73,16 @@ func CreatePost(client *mongo.Client, ctx context.Context, w http.ResponseWriter
 			{Key: "$set", Value: bson.D{{Key: "ID", Value: postID}}},
 		})
 		fmt.Println(updatedPost)
+		var postResp PostResp
+		postResp.PostID = postID
+		postJson, err := json.Marshal(postResp)
+		if err != nil{
+			http.Error(w, "Internal Error", http.StatusInternalServerError)
+			return "No document found"
+		}
 		w.Header().Set("Content-Type","application/json")
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(postID))
-
+		w.Write([]byte(postJson))
 	}
 
 	if err!=nil{

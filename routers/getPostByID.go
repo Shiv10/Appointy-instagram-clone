@@ -34,8 +34,17 @@ func GetPost(client *mongo.Client, ctx context.Context, w http.ResponseWriter, r
 	cur, err := postsCollection.Find(ctx, filter)
 
 	if err==mongo.ErrNoDocuments {
-		http.Error(w, "No post found", http.StatusOK)
-    	return "Not found"
+		var e Error
+		e.Err = "No post found for post ID"
+		responseJson, err := json.Marshal(e)
+		if err != nil{
+			http.Error(w, "Internal Error", http.StatusInternalServerError)
+			return "Error"
+		}
+		w.Header().Set("Content-Type","application/json")
+		w.WriteHeader(http.StatusOK)
+		w.Write(responseJson)
+		return "No post found"
 	}
 
 	if err!=nil && err!= mongo.ErrNoDocuments {
@@ -59,8 +68,17 @@ func GetPost(client *mongo.Client, ctx context.Context, w http.ResponseWriter, r
 	}
 	
 	if len(posts)==0{
-		http.Error(w, "No posts for given id", http.StatusInternalServerError)
-		return "No posts"
+		var e Error
+		e.Err = "No post found for post ID"
+		responseJson, err := json.Marshal(e)
+		if err != nil{
+			http.Error(w, "Internal Error", http.StatusInternalServerError)
+			return "Error"
+		}
+		w.Header().Set("Content-Type","application/json")
+		w.WriteHeader(http.StatusOK)
+		w.Write(responseJson)
+		return "No post found"
 	}
 	postsJson, err := json.Marshal(posts)
 	if err != nil{

@@ -43,6 +43,16 @@ func GetUser(client *mongo.Client, ctx context.Context, w http.ResponseWriter, r
 		http.Error(w, "Internal Error", http.StatusInternalServerError)
         return "Error"
 	}
-	http.Error(w, "No user found", http.StatusOK)
-    return "Not found"
+
+	var e Error
+	e.Err = "No user found for user ID"
+	responseJson, err := json.Marshal(e)
+	if err != nil{
+		http.Error(w, "Internal Error", http.StatusInternalServerError)
+		return "Error"
+	}
+	w.Header().Set("Content-Type","application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(responseJson)
+	return "No post found"
 }
