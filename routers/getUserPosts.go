@@ -2,19 +2,35 @@ package routers
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"encoding/json"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo/options"
+	"strconv"
 )
 
 func GetPostByUser(client *mongo.Client, ctx context.Context, w http.ResponseWriter, r *http.Request, id string) string{
 	appointyDB := client.Database("AppointyDB")
 	postsCollection := appointyDB.Collection("Posts")
+
 	filter := bson.D{{Key: "UserID", Value: id}}
 
+	//Add Pagination
+	findOptions := options.Find()
+	tempPage := r.URL.Query().Get("page")
+	var page int=1
+	if tempPage!=""{
+		page, _ = strconv.Atoi(tempPage)
+	}
+	var pageLimit int64 = 5
+
+	findOptions.SetSkip(((int64(page)-1)*pageLimit))
+	findOptions.SetLimit(pageLimit)
+
 	var posts []PostResponse
-	cur, err := postsCollection.Find(ctx, filter)
+	cur, err := postsCollection.Find(ctx, filter, findOptions)
 
 	if err==mongo.ErrNoDocuments {
 		var e Error
@@ -31,6 +47,7 @@ func GetPostByUser(client *mongo.Client, ctx context.Context, w http.ResponseWri
 	}
 
 	if err!=nil && err!= mongo.ErrNoDocuments {
+		fmt.Println(err)
 		http.Error(w, "Internal Error", http.StatusInternalServerError)
         return "Error"
 	}

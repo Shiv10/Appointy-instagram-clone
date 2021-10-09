@@ -90,6 +90,12 @@ func NewRouter(client *mongo.Client, ctx context.Context) http.Handler {
 				w.Write(responseJson)
 				return
 			}
+			
+			if r.URL.Query().Get("page")!=""{
+				tempID := strings.Split(id, "?")
+				id = tempID[0]
+			}
+
 			res := GetPostByUser(client, ctx, w, r, id)
 			fmt.Println(res)
 			return
