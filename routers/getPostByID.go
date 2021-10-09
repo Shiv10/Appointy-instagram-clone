@@ -63,12 +63,12 @@ func GetPost(client *mongo.Client, ctx context.Context, w http.ResponseWriter, r
 		http.Error(w, "No posts for given id", http.StatusInternalServerError)
 		return "No posts"
 	}
-	userJson, err := json.Marshal(posts)
+	postsJson, err := json.Marshal(posts)
 	if err != nil{
 		http.Error(w, "Internal Error", http.StatusInternalServerError)
 		return "error"
 	}
 	w.WriteHeader(http.StatusOK)
-	w.Write(userJson)
+	w.Write(postsJson)
 	return "post sent."
 }
