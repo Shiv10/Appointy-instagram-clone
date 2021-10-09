@@ -8,9 +8,9 @@
   <p align="center">
     Task for Appointy Internship 2021
     <br />
-    <a href="https://github.com/Shiv10/Appointy-instagram-clone"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/Shiv10/Appointy-instagram-clone" target="_blank"><strong>Explore the docs »</strong></a>
     <br />
-    <a href="https://drive.google.com/file/d/1BsLvLt8L40TSJO1KA6jRUwP7LHJyzBoQ/view?usp=sharing">View Demo</a>
+    <a href="https://drive.google.com/file/d/1BsLvLt8L40TSJO1KA6jRUwP7LHJyzBoQ/view?usp=sharing" target="_blank">View Demo</a>
     ·
     <a href="https://github.com/Shiv10/Appointy-instagram-clone/issues">Report Bug</a>
     ·
