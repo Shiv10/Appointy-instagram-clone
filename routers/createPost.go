@@ -8,6 +8,7 @@ import (
 	"context"
 	"net/http"
 	"encoding/json"
+	"time"
 )
 
 type Post struct {
@@ -46,6 +47,8 @@ func CreatePost(client *mongo.Client, ctx context.Context, w http.ResponseWriter
 			{Key: "UserID", Value: post.UserID},
 			{Key: "ID", Value: "null"},
 			{Key: "ImageUrl", Value: post.ImageURL},
+			{Key: "Timestamp", Value: time.Now()},
+
 		})
 		if err!=nil{
 			http.Error(w, "Internal Error", http.StatusInternalServerError)
