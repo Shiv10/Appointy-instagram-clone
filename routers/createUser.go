@@ -8,9 +8,7 @@ import (
 	"context"
 	"net/http"
 	"encoding/json"
-	// "reflect"
 	"crypto/sha1"
-	// "time"
 )
 
 type User struct {
