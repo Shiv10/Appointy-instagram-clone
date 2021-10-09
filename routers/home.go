@@ -32,10 +32,9 @@ func NewRouter(client *mongo.Client, ctx context.Context) http.Handler {
 			return
 		}
 
-		if r.URL.Path == "/createPost" {
-			res := CreatePost()
-			w.WriteHeader(http.StatusOK)
-			w.Write([]byte(res))
+		if r.URL.Path == "/posts" && r.Method == http.MethodPost {
+			res := CreatePost(client, ctx, w, r)
+			fmt.Println(res)
 			return
 		}
 
