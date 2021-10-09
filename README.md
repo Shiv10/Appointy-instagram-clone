@@ -131,7 +131,7 @@ Examples of routes using [Postman](https://www.postman.com/)
 
 ## Roadmap
 
-See the [open issues]((https://github.com/Shiv10/Appointy-instagram-clone/issues) for a list of proposed features (and known issues).
+See the ![open issues]((https://github.com/Shiv10/Appointy-instagram-clone/issues) for a list of proposed features (and known issues).
 
 
 ## Contributing
