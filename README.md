@@ -55,6 +55,12 @@ Sr. No                     |  Description
 4. Get post by ID          |  GET request on route '/posts/:id' to retrieve a post from the Db by using ID
 5. List all posts of a user|  GET request on route '/posts/users/:id' to retrive all posts of a user. (Pagination applied to make backend efficient)
 
+| S. No.           | Description                                        |   |   |   |
+|------------------|----------------------------------------------------|---|---|---|
+| 1. Create a user | POST Request on route '/users' to a user to the DB |   |   |   |
+|                  |                                                    |   |   |   |
+|                  |                                                    |   |   |   |
+
 
 
 ### Built With
